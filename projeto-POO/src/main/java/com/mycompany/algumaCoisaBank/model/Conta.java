@@ -52,14 +52,7 @@ public abstract class Conta {
         this.saldo -= num;
     }
     
-    public void transfere(Conta conta, double num) {
-        if(num > saldo) {
-            System.out.println("ta doido filho kk");
-            return;
-        }  
-        this.saldo -= num;
-        conta.deposita(num);
-    }
+    abstract void transfere(Conta conta, double num);
     
     public void toString(Conta conta){ 
         System.out.println("===============================");

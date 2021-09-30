@@ -3,7 +3,7 @@ package com.mycompany.algumaCoisaBank;
 import com.mycompany.AlgumaCoisaBank.model.Conta;
 import com.mycompany.AlgumaCoisaBank.model.ContaCorrente;
 import com.mycompany.AlgumaCoisaBank.model.ContaPoupanca;
-import com.mycompany.AlgumaCoisaBank.model.ContaSalario;
+import com.mycompany.AlgumaCoisaBank.model.ContaUniversitaria;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -92,7 +92,7 @@ public class Main {
                 contas.add(poupanca);
                 break;
             default:
-                Conta salario = new ContaSalario(numero, agencia, nome);
+                Conta salario = new ContaUniversitaria(numero, agencia, nome);
                 salario.toString(salario);
                 contas.add(salario);
                 break;

@@ -12,6 +12,20 @@ public class ContaCorrente extends Conta implements Taxa {
     }
 
     @Override
+    public void transfere(Conta conta, double num) {
+        double transfReal = this.saldo + taxa();
+         if(num > transfReal) {
+            System.out.println("ta doido filho kk");
+            return;
+        }  
+        this.saldo -= transfReal;
+        conta.deposita(num);
+        
+    }
+    
+    
+
+    @Override
     public void toString(Conta conta) {
         System.out.println("===============================");
         System.out.println("Tipo de conta: Conta Corrente");
@@ -23,6 +37,6 @@ public class ContaCorrente extends Conta implements Taxa {
 
     @Override
     public double taxa() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.saldo *0.2;    
     }
 }
