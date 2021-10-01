@@ -10,13 +10,14 @@ public class ContaUniversitaria extends Conta {
     }
 
     @Override
-    void transfere(Conta conta, double num) {
-         if(num > this.saldo) {
-            System.out.println("ta doido filho kk");
-            return;
-        }  
-        this.saldo -= num;
-        conta.deposita(num);
+    public void toString(Conta conta) {
+        super.toString(conta);
+        System.out.println("===============================");
+        System.out.println("Tipo de conta: Conta Universitaria");
+        System.out.println("Proprietario: " + this.nome);
+        System.out.println("Agencia: " + this.agencia);
+        System.out.println("Conta: " + this.numero);
+        System.out.println("saldo: " + this.saldo);
     }
     
 }

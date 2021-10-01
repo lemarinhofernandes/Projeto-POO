@@ -13,20 +13,19 @@ public class ContaCorrente extends Conta implements Taxa {
 
     @Override
     public void transfere(Conta conta, double num) {
+        super.transfere(conta, num);
         double transfReal = this.saldo + taxa();
          if(num > transfReal) {
-            System.out.println("ta doido filho kk");
-            return;
-        }  
-        this.saldo -= transfReal;
-        conta.deposita(num);
-        
+            System.out.println("Impossivel realizar operação");
+        }  else {
+            this.saldo -= transfReal;
+            conta.deposita(num);
+         }
     }
     
-    
-
     @Override
     public void toString(Conta conta) {
+        super.toString(conta);
         System.out.println("===============================");
         System.out.println("Tipo de conta: Conta Corrente");
         System.out.println("Proprietario: " + this.nome);

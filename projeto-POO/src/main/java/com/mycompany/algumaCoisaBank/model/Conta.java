@@ -46,20 +46,27 @@ public abstract class Conta {
     
     public void deposita(double num){
         this.saldo += num;
+        System.out.println("R$" + num + " depositados.");
     }
     
     public void saca(double num){
+        if(this.saldo < num) {
+            System.out.println("Impossivel realizar operação");
+            return;
+        }
         this.saldo -= num;
+        System.out.println("Saldo atual: R$" + this.saldo);
     }
     
-    abstract void transfere(Conta conta, double num);
+    public void transfere(Conta conta, double num){
+        if(num > this.saldo) {
+            System.out.println("ta doido filho kk");
+            return;
+        }  
+        this.saldo -= num;
+        conta.deposita(num);
+    }
     
     public void toString(Conta conta){ 
-        System.out.println("===============================");
-        System.out.println("Proprietario: " + this.nome);
-        System.out.println("Agencia: " + this.agencia);
-        System.out.println("Conta: " + this.numero);
-        System.out.println("saldo: " + this.saldo);
     }
-    
 }
