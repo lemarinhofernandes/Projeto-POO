@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner ler = new Scanner(System.in);
         Scanner lerString = new Scanner(System.in);
+        //Arraylist de contas pra armazenamento de contas
         ArrayList<Conta> contas = new ArrayList();
         ContaCorrente luis = new ContaCorrente(2134, 22222, "Luis", 1);
         ContaPoupanca daniel = new ContaPoupanca(1234, 22222, "Daniel", 2);
@@ -49,6 +50,7 @@ public class Main {
                    //Procura e exclui uma conta a partir do index no "for"
                    numConta = numEncontrar(ler);
                    for(int i=0; i < tam; i++) {
+                       //remove a partir do indice
                        if(numConta == contas.get(i).getNumero())
                            contas.remove(i);
                    }
@@ -178,6 +180,5 @@ public class Main {
                     break;
             }
         }while(operacao !=0);
-    }      
-    
+    }       
 }

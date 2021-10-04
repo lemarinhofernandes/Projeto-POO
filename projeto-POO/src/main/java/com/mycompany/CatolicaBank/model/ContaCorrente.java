@@ -11,6 +11,8 @@ public class ContaCorrente extends Conta implements Taxa {
         this.saldo = 20.0;
     }
 
+    
+    //polimorfismo: cada classe fila implementa um transfere diferente
     @Override
     public void transfere(Conta conta, double num) {
         super.transfere(conta, num);
@@ -23,6 +25,8 @@ public class ContaCorrente extends Conta implements Taxa {
          }
     }
     
+    
+    //metodos abstratos implementados
     @Override
     public void toString(Conta conta) {
         System.out.println("===============================");
@@ -32,9 +36,10 @@ public class ContaCorrente extends Conta implements Taxa {
         System.out.println("Conta: " + this.numero);
         System.out.println("saldo: " + this.saldo);
     }
-
-    @Override
-    public double taxa() {
-        return this.saldo *0.2;    
-    }
+    
+    //metodo da interface implementados
+        @Override
+        public double taxa() {
+            return this.saldo *0.2;    
+        }
 }

@@ -1,4 +1,5 @@
 package com.mycompany.CatolicaBank.model;
+//Classe abstrata, classe pai da herança
 public abstract class Conta {
     protected int numero;
     protected int agencia;
@@ -79,5 +80,6 @@ public abstract class Conta {
         conta.deposita(num);
     }
     
+    //metodo abstrato pras classes filhas implementarem
     abstract void toString(Conta conta);
 }
