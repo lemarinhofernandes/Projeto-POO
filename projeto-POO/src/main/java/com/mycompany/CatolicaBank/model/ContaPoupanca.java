@@ -1,5 +1,6 @@
 package com.mycompany.CatolicaBank.model;
 
+//classe filha
 public class ContaPoupanca extends Conta implements Taxa{
 
     public ContaPoupanca() {
@@ -11,6 +12,7 @@ public class ContaPoupanca extends Conta implements Taxa{
         this.saldo = 20.0;
     }
 
+    //polimorfismo: cada classe fila implementa um transfere diferente
     @Override
     public void transfere(Conta conta, double num) {
         super.transfere(conta, num);
@@ -23,8 +25,10 @@ public class ContaPoupanca extends Conta implements Taxa{
          }
     }
     
+    
+    //metodos abstratos implementados
     @Override
-    public void toString(Conta conta) {
+    public void imprime(Conta conta) {
         System.out.println("===============================");
         System.out.println("Tipo de conta: Conta poupança");
         System.out.println("Proprietario: " + this.nome);
@@ -33,6 +37,7 @@ public class ContaPoupanca extends Conta implements Taxa{
         System.out.println("saldo: " + this.saldo);
     }
     
+    //metodo da interface implementados
     @Override
     public double taxa() {
         return this.saldo *0.1;

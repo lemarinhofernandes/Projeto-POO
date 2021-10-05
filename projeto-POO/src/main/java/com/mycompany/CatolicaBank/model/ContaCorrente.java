@@ -1,5 +1,6 @@
 package com.mycompany.CatolicaBank.model;
 
+//classe filha
 public class ContaCorrente extends Conta implements Taxa {
 
     public ContaCorrente() {
@@ -28,7 +29,7 @@ public class ContaCorrente extends Conta implements Taxa {
     
     //metodos abstratos implementados
     @Override
-    public void toString(Conta conta) {
+    public void imprime(Conta conta) {
         System.out.println("===============================");
         System.out.println("Tipo de conta: Conta Corrente");
         System.out.println("Proprietario: " + this.nome);
@@ -40,6 +41,6 @@ public class ContaCorrente extends Conta implements Taxa {
     //metodo da interface implementados
         @Override
         public double taxa() {
-            return this.saldo *0.2;    
+            return this.saldo *0.2;  
         }
 }

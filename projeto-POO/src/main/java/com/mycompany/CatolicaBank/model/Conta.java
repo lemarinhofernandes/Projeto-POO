@@ -1,11 +1,12 @@
 package com.mycompany.CatolicaBank.model;
-//Classe abstrata, classe pai da herança
+
+//Classe abstrata, classe mãe da herança
 public abstract class Conta {
-    protected int numero;
-    protected int agencia;
-    protected double saldo;
-    protected String nome;
-    protected int tipo;
+    int numero;
+    int agencia;
+    double saldo;
+    String nome;
+    int tipo;
 
     
 
@@ -73,7 +74,7 @@ public abstract class Conta {
     
     public void transfere(Conta conta, double num){
         if(num > this.saldo) {
-            System.out.println("ta doido filho kk");
+            System.out.println("Impossivel realizar operação");
             return;
         }  
         this.saldo -= num;
@@ -81,5 +82,5 @@ public abstract class Conta {
     }
     
     //metodo abstrato pras classes filhas implementarem
-    abstract void toString(Conta conta);
+    abstract void imprime(Conta conta);
 }
