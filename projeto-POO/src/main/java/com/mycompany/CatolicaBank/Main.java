@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner ler = new Scanner(System.in);
         Scanner lerString = new Scanner(System.in);
-        //Arraylist de contas pra armazenamento de contas
+        //Arraylist pro armazenamento de contas
         ArrayList<Conta> contas = new ArrayList();
         ContaCorrente luis = new ContaCorrente(2134, 22222, "Luis", 1);
         ContaPoupanca daniel = new ContaPoupanca(1234, 22222, "Daniel", 2);
@@ -22,7 +22,6 @@ public class Main {
         int opcao;
         int tam = contas.size();
         int numConta;
-        
         do{
            menu();
            opcao = ler.nextInt();
@@ -56,10 +55,7 @@ public class Main {
                    }
                    break;
            }
-        }while(opcao!=0);
-        
-        
-        
+        }while(opcao!=0); 
     }
     
     //menus
@@ -97,19 +93,19 @@ public class Main {
             case 1:
                 {
                     ContaCorrente lista = (ContaCorrente) conta;
-                    lista.toString(lista);
+                    lista.imprime(lista);
                     break;
                 }
             case 2:
                 {
                     ContaPoupanca lista = (ContaPoupanca) conta;
-                    lista.toString(lista);
+                    lista.imprime(lista);
                     break;
                 }
             case 3:
                 {
                     ContaUniversitaria lista = (ContaUniversitaria) conta;
-                    lista.toString(lista);
+                    lista.imprime(lista);
                     break;
                 }
             default:
@@ -131,17 +127,17 @@ public class Main {
         switch (tipo) {
             case 1:
                 ContaCorrente corrente = new ContaCorrente(numero, agencia, nome, tipo);
-                corrente.toString(corrente);
+                corrente.imprime(corrente);
                 contas.add(corrente);
                 break;
             case 2:
                 ContaPoupanca poupanca = new ContaPoupanca(numero, agencia, nome, tipo);
-                poupanca.toString(poupanca);
+                poupanca.imprime(poupanca);
                 contas.add(poupanca);
                 break;
             default:
                 ContaUniversitaria universitaria = new ContaUniversitaria(numero, agencia, nome, tipo);
-                universitaria.toString(universitaria);
+                universitaria.imprime(universitaria);
                 contas.add(universitaria);
                 break;
         }
