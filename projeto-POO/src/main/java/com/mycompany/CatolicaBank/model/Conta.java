@@ -8,8 +8,6 @@ public abstract class Conta {
     String nome;
     int tipo;
 
-    
-
     public Conta() {
         this.saldo = 20.0;
     }
