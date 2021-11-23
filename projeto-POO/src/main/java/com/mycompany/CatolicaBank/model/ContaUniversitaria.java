@@ -4,12 +4,12 @@ package com.mycompany.CatolicaBank.model;
 public class ContaUniversitaria extends Conta {
 
     public ContaUniversitaria() {
-        this.saldo = 20.0;
+        
     }
 
-    public ContaUniversitaria(int numero, int agencia, String nome, int tipo) {
-        super(numero, agencia, nome, tipo);
-        this.saldo = 20.0;
+    public ContaUniversitaria(String numero, /*String agencia*/ String nome, int tipo) {
+        super(numero /*agencia*/, nome, tipo);
+       
     }
     
     //polimorfismo: cada classe fila implementa um transfere diferente
@@ -30,9 +30,9 @@ public class ContaUniversitaria extends Conta {
         System.out.println("===============================");
         System.out.println("Tipo de conta: Conta Universitaria");
         System.out.println("Proprietario: " + this.nome);
-        System.out.println("Agencia: " + this.agencia);
+        //System.out.println("Agencia: " + this.agencia);
         System.out.println("Conta: " + this.numero);
-        System.out.println("saldo: " + this.saldo);
+        System.out.println("Transferido: " + this.saldo);
     }
     
 }

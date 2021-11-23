@@ -19,14 +19,17 @@ import javax.swing.table.DefaultTableModel;
  * @author duduy
  */
 public class CatolicaBankJFrame extends javax.swing.JFrame {
-ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
+ContaCorrente proprietario = new ContaCorrente("51548", "Luís Eduardo", 1);
+
+static ArrayList<Conta> contas = new ArrayList();
     /**
      * Creates new form CatolicaBankJFrame
      */
     public CatolicaBankJFrame() {
         initComponents();
         setLocationRelativeTo(null);
-        
+        jlb_nomeProprietario.setText(proprietario.getNome());
+        jlb_contaProprietario.setText(proprietario.getNumero());
     }
 
     /**
@@ -67,11 +70,19 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
         jLabel2 = new javax.swing.JLabel();
         jp_about = new javax.swing.JPanel();
         jp_contas = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jlb_nomeProprietario = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jlb_saldoProprietario = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jlb_contaProprietario = new javax.swing.JLabel();
         jp_historico = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         sidebar.setBackground(new java.awt.Color(102, 102, 255));
 
@@ -118,7 +129,7 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
 
         lb_contas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lb_contas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_contas.setText("Contas");
+        lb_contas.setText("Conta");
         lb_contas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lb_contasMouseClicked(evt);
@@ -238,9 +249,19 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
 
         jb_saque.setBackground(new java.awt.Color(204, 204, 255));
         jb_saque.setText("saque");
+        jb_saque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_saqueMouseClicked(evt);
+            }
+        });
 
         jb_deposito.setBackground(new java.awt.Color(204, 204, 255));
         jb_deposito.setText("deposito");
+        jb_deposito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_depositoMouseClicked(evt);
+            }
+        });
 
         jb_transferencia.setBackground(new java.awt.Color(204, 204, 255));
         jb_transferencia.setText("transferir");
@@ -276,7 +297,7 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
         jtf_nome.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jcb_tipoConta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jcb_tipoConta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Conta Corrente\t", "Conta Poupanca", "Conta Universitária" }));
+        jcb_tipoConta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Conta Corrente", "Conta Poupanca", "Conta Universitária" }));
         jcb_tipoConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcb_tipoContaActionPerformed(evt);
@@ -373,62 +394,92 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
             .addGap(0, 463, Short.MAX_VALUE)
         );
 
+        jp_contas.setBackground(new java.awt.Color(255, 255, 255));
         jp_contas.setPreferredSize(new java.awt.Dimension(626, 463));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setText("Nome do proprietario");
+
+        jlb_nomeProprietario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlb_nomeProprietario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Saldo");
+
+        jlb_saldoProprietario.setBackground(new java.awt.Color(255, 255, 255));
+        jlb_saldoProprietario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlb_saldoProprietario.setForeground(new java.awt.Color(255, 0, 102));
+        jlb_saldoProprietario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlb_saldoProprietario.setText(" R$ 0.0");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Numero da conta");
+
+        jlb_contaProprietario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlb_contaProprietario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jp_contasLayout = new javax.swing.GroupLayout(jp_contas);
         jp_contas.setLayout(jp_contasLayout);
         jp_contasLayout.setHorizontalGroup(
             jp_contasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 626, Short.MAX_VALUE)
+            .addGroup(jp_contasLayout.createSequentialGroup()
+                .addGap(181, 181, 181)
+                .addGroup(jp_contasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlb_nomeProprietario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlb_contaProprietario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlb_saldoProprietario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         jp_contasLayout.setVerticalGroup(
             jp_contasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGroup(jp_contasLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlb_nomeProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jlb_contaProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlb_saldoProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(148, 148, 148))
         );
 
         jp_historico.setBackground(new java.awt.Color(255, 255, 255));
         jp_historico.setPreferredSize(new java.awt.Dimension(626, 463));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("TRANSFERENCIAS");
 
-            },
-            new String [] {
-                "Primeiro Nome", "Ultimo nome", "Numero da conta", "Valor Transferido"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-        }
+        jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout jp_historicoLayout = new javax.swing.GroupLayout(jp_historico);
         jp_historico.setLayout(jp_historicoLayout);
         jp_historicoLayout.setHorizontalGroup(
             jp_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jp_historicoLayout.setVerticalGroup(
             jp_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_historicoLayout.createSequentialGroup()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout screenLayout = new javax.swing.GroupLayout(screen);
@@ -473,10 +524,9 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tab_historicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab_historicoMouseClicked
-        ArrayList<Conta> contas = new ArrayList();
+
         menuClick(1);
-        
-       
+          
 ;
         
     }//GEN-LAST:event_tab_historicoMouseClicked
@@ -515,7 +565,7 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
 
     private void jb_transferenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_transferenciaMouseClicked
         String nome = "";
-        int contaDestino = 0;
+        String contaDestino = "";
         String valorTransferido = "";
         double quantia = 0;
         if(jtf_nome.getText().isEmpty()) {
@@ -527,7 +577,7 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
             JOptionPane.showMessageDialog(this, "O campo numero da conta deve estar preenchido", "Input Error", JOptionPane.WARNING_MESSAGE);
         }else {
             try {
-            contaDestino = Integer.parseInt(jtf_contaDestino.getText());
+            contaDestino = jtf_contaDestino.getText();
             } catch(NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "O campo numero da conta deve ser um numero", "Input Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -541,27 +591,45 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
                 JOptionPane.showMessageDialog(this, "O campo valor deve ser um numero", "Input Error", JOptionPane.WARNING_MESSAGE);
             }
         }
-        if (null != jcb_tipoConta.getSelectedItem().toString()) switch (jcb_tipoConta.getSelectedItem().toString()) {
+        if (jcb_tipoConta.getSelectedItem().toString() != null){
+        switch (jcb_tipoConta.getSelectedItem().toString()) {
         case "Conta Corrente":
-            ContaCorrente contacorrente = new ContaCorrente(0000, contaDestino, nome, 1);
-            proprietario.transfere(contacorrente, quantia);
-            addTransferToTable(contacorrente);
+            ContaCorrente corrente = new ContaCorrente(contaDestino, nome, 1);
+            proprietario.transfere(corrente, quantia);
+            corrente.imprime(corrente);
+            contas.add(corrente);
             break;
-        case "Conta Poupança":
-            ContaPoupanca contapoupanca = new ContaPoupanca(0000, contaDestino, nome, 2);
-            proprietario.transfere(contapoupanca, quantia);
-            addTransferToTable(contapoupanca);
+        case "Conta Poupanca":
+            ContaPoupanca poupanca = new ContaPoupanca(contaDestino, nome, 2);
+            proprietario.transfere(poupanca, quantia);
+            poupanca.imprime(poupanca);
+            contas.add(poupanca);
             break; 
         case "Conta Universitária":
-            ContaUniversitaria contauniversitaria = new ContaUniversitaria(0000, contaDestino, nome, 3);
-            proprietario.transfere(contauniversitaria, quantia);
-            addTransferToTable(contauniversitaria);
+            ContaUniversitaria uni = new ContaUniversitaria(contaDestino, nome, 3);
+            proprietario.transfere(uni, quantia);
+            uni.imprime(uni);
+            contas.add(uni);
             break;
-        default:
-            break;
-    }
+        }
+        contas.forEach(conta -> {
+            conta.imprimeConta();
+            });    
+            System.out.println(contas.size());
         
+    }
     }//GEN-LAST:event_jb_transferenciaMouseClicked
+
+    private void jb_depositoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_depositoMouseClicked
+        
+        proprietario.deposita(Double.parseDouble(jtf_deposito.getText()));
+        jlb_saldoProprietario.setText("R$ " + proprietario.getSaldo());
+    }//GEN-LAST:event_jb_depositoMouseClicked
+
+    private void jb_saqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_saqueMouseClicked
+        proprietario.saca(Double.parseDouble(jtf_saque.getText()));
+        jlb_saldoProprietario.setText("R$ " + proprietario.getSaldo());
+    }//GEN-LAST:event_jb_saqueMouseClicked
 
     /**
      * @param args the command line arguments
@@ -597,8 +665,7 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
     }
     
     public void addTransferToTable(Conta conta) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.addRow(new Object[] {conta.getNome(), conta.getNumero(), conta.getSaldo(), conta.getTipo()});
+       
     }
     
     public void menuClick(int opt) {
@@ -655,16 +722,23 @@ ContaCorrente proprietario = new ContaCorrente(0000, 000000, "Luís", 1);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jb_deposito;
     private javax.swing.JButton jb_saque;
     private javax.swing.JButton jb_transferencia;
     private javax.swing.JComboBox<String> jcb_tipoConta;
+    private javax.swing.JLabel jlb_contaProprietario;
     private javax.swing.JLabel jlb_nome;
+    private javax.swing.JLabel jlb_nomeProprietario;
     private javax.swing.JLabel jlb_numeroConta;
+    private javax.swing.JLabel jlb_saldoProprietario;
     private javax.swing.JLabel jlb_valor;
     private javax.swing.JPanel jp_about;
     private javax.swing.JPanel jp_contas;

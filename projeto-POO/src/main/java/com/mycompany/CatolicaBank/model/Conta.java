@@ -2,21 +2,21 @@ package com.mycompany.CatolicaBank.model;
 
 //Classe abstrata, classe mãe da herança
 public abstract class Conta {
-    int numero;
-    int agencia;
+    String numero;
+    //String agencia;
     double saldo;
     String nome;
     int tipo;
 
     public Conta() {
-        this.saldo = 20.0;
+       
     }
 
-    public Conta(int numero, int agencia, String nome, int tipo) {
+    public Conta(String numero /*String agencia*/, String nome, int tipo) {
         this.numero = numero;
-        this.agencia = agencia;
+        /*this.agencia = agencia;*/
         this.nome = nome;
-        this.saldo = 20.0;
+        
         this.tipo = tipo;
     }
     
@@ -36,21 +36,21 @@ public abstract class Conta {
         this.nome = nome;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public int getAgencia() {
+    /*public String getAgencia() {
         return agencia;
-    }
+    }*/
 
-    public void setAgencia(int agencia) {
+    /*public void setAgencia(String agencia) {
         this.agencia = agencia;
-    }
+    }*/
 
     public double getSaldo() {
         return saldo;
@@ -81,4 +81,31 @@ public abstract class Conta {
     
     //metodo abstrato pras classes filhas implementarem
     abstract void imprime(Conta conta);
+    
+    
+    
+    public void imprimeConta() {
+        String tipoConta = "";
+        switch (this.tipo) {
+            case 1:
+                tipoConta = "Conta Corrente";
+                break;
+            case 2:
+                tipoConta = "Conta Poupança";
+                break;
+            case 3:
+                tipoConta = "Conta Universitária";
+                break;
+            default:
+                break;
+        }
+        System.out.println("===============================");
+        System.out.println("Tipo de conta: " + tipoConta);
+        System.out.println("Proprietario: " + this.nome);
+        //System.out.println("Agencia: " + this.agencia);
+        System.out.println("Conta: " + this.numero);
+        System.out.println("saldo: " + this.saldo);
+        
+        
+    }
 }
