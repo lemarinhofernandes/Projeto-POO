@@ -51,6 +51,7 @@ static ArrayList<Conta> contas = new ArrayList();
         initComponents();
         setLocationRelativeTo(null);
         clienteDAO = new GenericDAO<>();
+        setProprietario();
         clienteDAODeposito = new GenericDAO<>();
         clienteDAOSaque = new GenericDAO<>();
         clienteDAOTransf = new GenericDAO<>();
@@ -1119,5 +1120,17 @@ static ArrayList<Conta> contas = new ArrayList();
             break;
     }
        jlb_ultimaTransf.setText(contaBen.getNome() + " | " + contaBen.getNumero() + " | " + tipo + " | " + transf);
+    }
+
+    private void setProprietario() {
+        Conta contaProp = new Conta();
+        contaProp.setId(1);
+        contaProp.setNome("Luís Eduardo");
+        contaProp.setNumero("555555");
+        contaProp.setTipo(1);
+        if(contaProp.getSaldo() == null) {
+            contaProp.setSaldo(Double.parseDouble("100"));
+        }
+        clienteDAO.saveOrUpdate(contaProp);
     }
 }
