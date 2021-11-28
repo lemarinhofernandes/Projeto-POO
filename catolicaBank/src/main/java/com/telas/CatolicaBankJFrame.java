@@ -47,17 +47,19 @@ static ArrayList<Conta> contas = new ArrayList();
      * Creates new form CatolicaBankJFrame
      */
     public CatolicaBankJFrame() {
-        Conta proprietario = new Conta();
         initComponents();
+        Conta proprietario = new Conta(); 
         setLocationRelativeTo(null);
-        clienteDAO = new GenericDAO<>();
-        setProprietario();
+        clienteDAO = new GenericDAO<>();    
         clienteDAODeposito = new GenericDAO<>();
         clienteDAOSaque = new GenericDAO<>();
         clienteDAOTransf = new GenericDAO<>();
         clienteDAORelDep = new GenericDAO<>();
         clienteDAORelSaque= new GenericDAO<>();
         clienteDAORelTransf = new GenericDAO<>();
+        if(clienteDAO.list(Conta.class).size() == 0) {
+            setProprietario();
+        }
         proprietario = clienteDAO.findById(Conta.class, 1);
         jlb_nomeProprietario.setText(proprietario.getNome());
         jlb_contaProprietario.setText(proprietario.getNumero());
@@ -1091,35 +1093,64 @@ static ArrayList<Conta> contas = new ArrayList();
     }
 
     private void setUltimoDeposito() {
+         Deposito deposito = new Deposito();
         int index = clienteDAODeposito.list(Deposito.class).size(); 
-        String deposito = clienteDAODeposito.findById(Deposito.class, index).getDeposito().toString();
-       jlb_ultimoDep.setText("R$ " + deposito);
+        System.out.println(index);
+        if(index == 0 ) {
+            jlb_ultimoDep.setText("R$ ");
+            deposito.setDeposito(0.0);
+            deposito.setId(1);
+            clienteDAODeposito.saveOrUpdate(deposito);
+        } else {
+            String depositoString = clienteDAODeposito.findById(Deposito.class, index).getDeposito().toString();
+            jlb_ultimoDep.setText("R$ " + depositoString);
+        }
+        
     }
 
     private void setUltimoSaque() {
+       Saque saque = new Saque();
         int index = clienteDAOSaque.list(Saque.class).size();
-        String saque = clienteDAOSaque.findById(Saque.class, index).getSaque().toString();
-        jlb_ultimoSaque.setText("R$ " + saque);
+        if(index == 0) {
+            jlb_ultimoSaque.setText("R$ ");
+            saque.setId(1);
+            saque.setSaque(0.0);
+            clienteDAOSaque.saveOrUpdate(saque);
+        } else{
+        String saqueString = clienteDAOSaque.findById(Saque.class, index).getSaque().toString();
+        jlb_ultimoSaque.setText("R$ " + saqueString);
+        }
     }
 
     private void setUltimaTransferencia() {
+        Transferencia transferencia = new Transferencia();
        int indexTransf = clienteDAOTransf.list(Transferencia.class).size();
-       String transf = clienteDAOTransf.findById(Transferencia.class, indexTransf).getValor().toString();
-       int indexContaBen = clienteDAO.list(Conta.class).size();
-       Conta contaBen = clienteDAO.findById(Conta.class, indexContaBen);
-       String tipo = "";
-    switch(contaBen.getTipo()) {
-        case 1: 
-            tipo = "Conta Corrente";
-            break;
-        case 2:
-            tipo = "Conta Poupança";
-            break;
-        case 3:
-            tipo = "Conta Universitária";
-            break;
-    }
-       jlb_ultimaTransf.setText(contaBen.getNome() + " | " + contaBen.getNumero() + " | " + tipo + " | " + transf);
+       if(indexTransf == 0) {
+            jlb_ultimaTransf.setText(" | " + " | " + " | ");
+            transferencia.setId(1);
+            transferencia.setValor(0.0);
+            clienteDAOTransf.saveOrUpdate(transferencia);
+       } else if(indexTransf == 1) {
+           jlb_ultimaTransf.setText(" | " + " | " + " | ");
+       } else  {
+            String transf = clienteDAOTransf.findById(Transferencia.class, indexTransf).getValor().toString();
+            int indexContaBen = clienteDAO.list(Conta.class).size();
+            Conta contaBen = clienteDAO.findById(Conta.class, indexContaBen);
+            String tipo = "";
+            switch(contaBen.getTipo()) {
+                case 1: 
+                    tipo = "Conta Corrente";
+                    break;
+                case 2:
+                    tipo = "Conta Poupança";
+                    break;
+                case 3:
+                    tipo = "Conta Universitária";
+                    break;
+            }
+            jlb_ultimaTransf.setText(contaBen.getNome() + " | " + contaBen.getNumero() + " | " + tipo + " | " + transf);
+       }
+       
     }
 
     private void setProprietario() {
@@ -1128,9 +1159,7 @@ static ArrayList<Conta> contas = new ArrayList();
         contaProp.setNome("Luís Eduardo");
         contaProp.setNumero("555555");
         contaProp.setTipo(1);
-        if(contaProp.getSaldo() == null) {
-            contaProp.setSaldo(Double.parseDouble("100"));
-        }
+        contaProp.setSaldo(Double.parseDouble("0"));
         clienteDAO.saveOrUpdate(contaProp);
     }
 }
